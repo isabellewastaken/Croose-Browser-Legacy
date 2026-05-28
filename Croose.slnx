@@ -1,10 +1,12 @@
 <Solution>
-  <Configurations>
-    <Platform Name="Any CPU" />
-    <Platform Name="x64" />
-  </Configurations>
-  <Project Path="Croose Setup/Croose Setup.vdproj" Type="Installer" />
-  <Project Path="Croose/Croose.csproj">
-    <Platform Solution="*|x64" Project="x64" />
-  </Project>
+	<Configurations>
+		<Platform Name="Any CPU" />
+		<Platform Name="x86" />
+	</Configurations>
+	<Project Path="Croose Setup/Croose Setup.vdproj" Type="Installer" />
+	<Project Path="Croose/Croose.csproj">
+		<!-- Remapped to assign the x86 profile execution directly to your app -->
+		<Platform Solution="*|x86" Project="x86" />
+		<Platform Solution="*|Any CPU" Project="x86" />
+	</Project>
 </Solution>
