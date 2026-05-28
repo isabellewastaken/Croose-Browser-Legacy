@@ -1,7 +1,6 @@
 # Croose-Browser
-A browser utilising Webview2.
+A browser utilising the WebBrowser component. Intended for Windows Vista.
 
-I made this a while ago to familiarise myself with the dotNet framework, so it's not amazing, but it works. It uses Chromium to display web pages and Tabcontrol for tabs. Still some stuff not added yet, like tab names changing based on the webpage displayed. Feel free to use as a base for other browsers.
+This port was authorised by the original creator.
 
-
-Official website (downloads, etc) -->  https://tinyurl.com/croosebrowser 
+For the official modern website (downloads, etc) -->  https://tinyurl.com/croosebrowser 
