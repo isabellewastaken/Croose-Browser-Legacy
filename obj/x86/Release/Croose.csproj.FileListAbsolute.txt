@@ -1,0 +1,9 @@
+C:\Users\FrostedSnow\source\repos\Croose-Browser\bin\Release\SearchThat_logo-removebg-preview.ico
+C:\Users\FrostedSnow\source\repos\Croose-Browser\bin\Release\Croose.exe
+C:\Users\FrostedSnow\source\repos\Croose-Browser\bin\Release\Croose.pdb
+C:\Users\FrostedSnow\source\repos\Croose-Browser\obj\x86\Release\Croose.csproj.AssemblyReference.cache
+C:\Users\FrostedSnow\source\repos\Croose-Browser\obj\x86\Release\Croose.Form1.resources
+C:\Users\FrostedSnow\source\repos\Croose-Browser\obj\x86\Release\Croose.csproj.GenerateResource.cache
+C:\Users\FrostedSnow\source\repos\Croose-Browser\obj\x86\Release\Croose.csproj.CoreCompileInputs.cache
+C:\Users\FrostedSnow\source\repos\Croose-Browser\obj\x86\Release\Croose.exe
+C:\Users\FrostedSnow\source\repos\Croose-Browser\obj\x86\Release\Croose.pdb
