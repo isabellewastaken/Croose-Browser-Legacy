@@ -1,10 +1,5 @@
-using Microsoft.Web.WebView2.Core;
-using Microsoft.Web.WebView2.WinForms;
-using Microsoft.Web.WebView2.Wpf;
-using System.Reflection.Metadata;
-using System.Security.Policy;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using WebView2 = Microsoft.Web.WebView2.WinForms.WebView2;
+using System;
+using System.Windows.Forms;
 
 namespace Croose
 {
@@ -13,151 +8,131 @@ namespace Croose
         public Form1()
         {
             InitializeComponent();
-
+            btnaddTab_Click(null, EventArgs.Empty); // le fix
         }
 
+        private WebBrowser CreateVistaBrowser()
+        {
+            WebBrowser browser = new WebBrowser();
+            browser.Dock = DockStyle.Fill;
+            browser.ScriptErrorsSuppressed = true;
+
+            browser.Navigated += (s, e) => {
+                if (tabControl1.SelectedTab != null && tabControl1.SelectedTab.Controls[0] == s)
+                {
+                    txtUrl.Text = browser.Url?.ToString() ?? "";
+                }
+            };
+            return browser;
+        }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            TabPage newTab = new TabPage("New Tab");
-            WebView2 webView = new WebView2();
-            webView.Dock = DockStyle.Fill;
-            newTab.Controls.Add(webView);
-            tabControl1.TabPages.Add(newTab);
-            webView.Source = new Uri("https://start.duckduckgo.com/");
-            string sURL = webView.Source.ToString();
-            txtUrl.Text = sURL;
-            new TabPage(sURL);
-            tabControl1.SelectedTab = newTab;
+            btnaddTab_Click(sender, e);
         }
-
-
-
 
         private void btnaddTab_Click(object sender, EventArgs e)
         {
-
             TabPage newTab = new TabPage("New Tab");
-            WebView2 webView = new WebView2();
-            webView.Dock = DockStyle.Fill;
-            newTab.Controls.Add(webView);
+            WebBrowser browser = CreateVistaBrowser();
+            newTab.Controls.Add(browser);
             tabControl1.TabPages.Add(newTab);
-            webView.Source = new Uri("https://start.duckduckgo.com/");
-            string sURL = webView.Source.ToString();
-            txtUrl.Text = sURL;
-            new TabPage(sURL);
+
+            browser.Navigate("https://start.duckduckgo.com/");
+            txtUrl.Text = "https://start.duckduckgo.com/";
             tabControl1.SelectedTab = newTab;
         }
 
-
-
-
         private void btnremovetab_Click_1(object sender, EventArgs e)
         {
-            WebView2 webView = new WebView2();
             if (tabControl1.TabCount > 0)
             {
                 tabControl1.TabPages.Remove(tabControl1.SelectedTab);
-
             }
         }
-
-
 
         private void btnHome_Click(object sender, EventArgs e)
         {
             if (tabControl1.TabCount > 0)
             {
                 var currentTab = tabControl1.SelectedTab;
+                var browser = (WebBrowser)currentTab.Controls[0];
 
-                var webView = (WebView2)currentTab.Controls[0];
-
-                webView.Source = new Uri("https://noai.duckduckgo.com");
-                string sURL = webView.Source.ToString();
-                txtUrl.Text = sURL;
-                new TabPage(sURL);
+                browser.Navigate("https://html.duckduckgo.com/html/");
+                txtUrl.Text = "https://html.duckduckgo.com/html/";
             }
         }
-
-
 
         private void btnBack_Click(object sender, EventArgs e)
         {
-            var currentTab = tabControl1.SelectedTab;
-            var webView = (WebView2)currentTab.Controls[0];
-
-            if (webView.CanGoBack)
+            if (tabControl1.TabCount > 0)
             {
-                webView.GoBack();
-                string sURL = webView.Source.ToString();
-                txtUrl.Text = sURL;
-                new TabPage(sURL);
+                var currentTab = tabControl1.SelectedTab;
+                var browser = (WebBrowser)currentTab.Controls[0];
+
+                if (browser.CanGoBack)
+                {
+                    browser.GoBack();
+                }
             }
         }
 
-
         private void btnForward_Click(object sender, EventArgs e)
         {
-            var currentTab = tabControl1.SelectedTab;
-            var webView = (WebView2)currentTab.Controls[0];
-
-            if (webView.CanGoForward)
+            if (tabControl1.TabCount > 0)
             {
-                webView.GoForward();
-                string sURL = webView.Source.ToString();
-                txtUrl.Text = sURL;
+                var currentTab = tabControl1.SelectedTab;
+                var browser = (WebBrowser)currentTab.Controls[0];
+
+                if (browser.CanGoForward)
+                {
+                    browser.GoForward();
+                }
             }
         }
 
         private void btnGo_Click(object sender, EventArgs e)
         {
-            TabPage newTab = new TabPage(txtUrl.Text);
-            WebView2 webView = new WebView2();
-            webView.Dock = DockStyle.Fill;
-            newTab.Controls.Add(webView);
+            TabPage newTab = new TabPage("New Tab");
+            WebBrowser browser = CreateVistaBrowser();
+            newTab.Controls.Add(browser);
             tabControl1.TabPages.Add(newTab);
-            string input = txtUrl.Text.Trim();
-            string sURL = txtUrl.Text;
-            txtUrl.Text = sURL;
-            new TabPage(sURL);
             tabControl1.SelectedTab = newTab;
 
-            if (input.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
-            {
+            string input = txtUrl.Text.Trim();
 
-                webView.Source = new Uri(input);
+            if (input.StartsWith("https://", StringComparison.OrdinalIgnoreCase) ||
+                input.StartsWith("http://", StringComparison.OrdinalIgnoreCase))
+            {
+                browser.Navigate(input);
             }
             else
             {
-
-                string searchUrl = "https://www.ecosia.org/search?q=" + Uri.EscapeDataString(input);
-                webView.Source = new Uri(searchUrl);
-
+                string searchUrl = "https://duckduckgo.com/?q=" + Uri.EscapeDataString(input);
+                browser.Navigate(searchUrl);
             }
         }
 
-
         private void button2_Click(object sender, EventArgs e)
         {
-            var currentTab = tabControl1.SelectedTab;
-            var webView = (WebView2)currentTab.Controls[0];
-            webView.Reload();
-            string sURL = webView.Source.ToString();
-            txtUrl.Text = sURL;
+            if (tabControl1.TabCount > 0)
+            {
+                var currentTab = tabControl1.SelectedTab;
+                var browser = (WebBrowser)currentTab.Controls[0];
+                browser.Refresh(); // WebBrowser uses Refresh instead of Reload
+            }
         }
 
         private void btnHelp_Click(object sender, EventArgs e)
         {
-            TabPage newTab = new TabPage(txtUrl.Text);
-            WebView2 webView = new WebView2();
-            webView.Dock = DockStyle.Fill;
-            newTab.Controls.Add(webView);
+            TabPage newTab = new TabPage("Help");
+            WebBrowser browser = CreateVistaBrowser();
+            newTab.Controls.Add(browser);
             tabControl1.TabPages.Add(newTab);
-            webView.Source = new Uri("https://sites.google.com/view/croosebrowser/help");
-            string sURL = webView.Source.ToString();
-            txtUrl.Text = "Croose://help";
-            new TabPage("Help");
+            tabControl1.SelectedTab = newTab;
 
+            browser.Navigate("https://sites.google.com/view/croosebrowser/help"); // Hey, this isn't relevant to Legacy. Maybe we oughta fix this?
+            txtUrl.Text = "Croose://help";
         }
 
         private void btnBlock_Click(object sender, EventArgs e)
@@ -165,40 +140,14 @@ namespace Croose
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void button3_Click(object sender, EventArgs e)
         {
             if (tabControl1.TabCount > 0)
             {
                 var currentTab = tabControl1.SelectedTab;
-
-                var webView = (WebView2)currentTab.Controls[0];
-
-                webView.Source = new Uri("https://noai.duckduckgo.com");
-                string sURL = webView.Source.ToString();
-                txtUrl.Text = sURL;
-                new TabPage(sURL);
+                var browser = (WebBrowser)currentTab.Controls[0];
+                txtUrl.Text = browser.Url?.ToString() ?? "";
             }
         }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            var currentTab = tabControl1.SelectedTab;
-            var webView = (WebView2)currentTab.Controls[0];
-            string sURL = webView.Source.ToString();
-            txtUrl.Text = sURL;
-
-        }
-
-       
     }
 }
-
- 
-
-
-
-
-
-
-
-
