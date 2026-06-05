@@ -1,4 +1,6 @@
-# Croose Browser Legacy
+# Croose Legacy
+## Note: The original creator is making a newer browser, so eventually I will stop updating this and move onto making a Legacy version of that.
+
 A browser utilising the WebBrowser component. Intended for Windows Vista to Windows 8.0.
 
 This port was authorised by the original creator.
