@@ -1,5 +1,7 @@
 # Croose-Browser
-A browser utilising Webview2.
+A browser utilising WebView2.
+
+(This is no longer being worked on! I have moved onto maintaining Breathe7.)
 
 I made this a while ago to familiarise myself with the dotNet framework, so it's not amazing, but it works. It uses Chromium to display web pages and Tabcontrol for tabs. Still some stuff not added yet, like tab names changing based on the webpage displayed. Feel free to use as a base for other browsers.
 
